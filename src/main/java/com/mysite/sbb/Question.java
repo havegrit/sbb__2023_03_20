@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,4 +19,6 @@ public class Question {
     @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime create_date;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<Answer> answerList;
 }
