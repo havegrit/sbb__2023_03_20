@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class SbbApplicationTests {
@@ -28,4 +32,13 @@ class SbbApplicationTests {
 		questionRepository.save(q2);  // 두번째 질문 저장
 	}
 
+	@Test
+	@DisplayName("findAll")
+	void t002() {
+		List<Question> all = this.questionRepository.findAll();
+		assertEquals(2, all.size());
+
+		Question q = all.get(0);
+		assertEquals("sbb가 무엇인가요?", q.getSubject());
+	}
 }
