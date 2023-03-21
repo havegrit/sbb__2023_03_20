@@ -13,8 +13,8 @@ import java.util.List;
 @Entity
 public class Question {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(length = 200)
     private String subject;
     @Column(columnDefinition = "TEXT")
