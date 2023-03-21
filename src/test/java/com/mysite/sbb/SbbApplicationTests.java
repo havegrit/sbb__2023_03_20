@@ -26,6 +26,8 @@ class SbbApplicationTests {
 
 	@BeforeEach // 아래 메서드는 각 테스트케이스가 실행되기 전에 실행된다.
 	void beforeEach() {
+		answerRepository.deleteAll();
+		answerRepository.clearAutoIncrement();
 		// 모든 데이터 삭제
 		questionRepository.deleteAll();
 
