@@ -1,23 +1,46 @@
-<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
-<h1>
-    <span th:text="${question.id}"></span>번 상세 질문
-</h1>
-<h2 th:text="${question.subject}"></h2>
-<div th:text="${question.content}"></div>
-
-<h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
-
-<form th:action="@{|/answer/create/${question.id}|}" method="post">
-    <div>
-        <span>내용</span>
-        <br>
-        <textarea placeholder="내용" name ="content" rows="15"></textarea>
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<style>
+    @font-face {
+        font-family: 'GmarketSansMedium';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    html > body {
+        font-family: GmarketSansMedium;
+    }
+</style>
+<div class="container my-3">
+    <!-- 질문 -->
+    <h2 class="border-bottom py-2" th:text="${question.subject}"></h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;" th:text="${question.content}"></div>
+            <div class="d-flex justify-content-end">
+                <div class="badge bg-light text-dark p-2 text-start">
+                    <div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+            </div>
+        </div>
     </div>
-    <input type="submit" value="답변작성">
-</form>
-
-<div>
-    <ul>
-        <li th:each="answer : ${question.answerList}" th:text="|${answer.id}번 답변: ${answer.content}|"></li>
-    </ul>
+    <!-- 답변의 갯수 표시 -->
+    <h5 class="border-bottom my-3 py-2"
+        th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
+    <!-- 답변 반복 시작 -->
+    <div class="card my-3" th:each="answer : ${question.answerList}">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;" th:text="${answer.content}"></div>
+            <div class="d-flex justify-content-end">
+                <div class="badge bg-light text-dark p-2 text-start">
+                    <div th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 답변 반복 끝  -->
+    <!-- 답변 작성 -->
+    <form th:action="@{|/answer/create/${question.id}|}" method="post" class="my-3">
+        <textarea name="content" id="content" rows="10" class="form-control"></textarea>
+        <input type="submit" value="답변등록" class="btn btn-primary my-2">
+    </form>
 </div>

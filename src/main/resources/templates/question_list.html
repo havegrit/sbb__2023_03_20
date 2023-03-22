@@ -1,4 +1,15 @@
 <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<style>
+    @font-face {
+        font-family: 'GmarketSansMedium';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    html > body {
+        font-family: GmarketSansMedium;
+    }
+</style>
 <h2>질문 목록</h2>
 <table class="table">
     <thead class="table-dark">
@@ -16,7 +27,7 @@
         <td>
             <a th:href="@{|/question/detail/${q.id}|}" th:text = "${q.subject}"></a>
         </td>
-        <td th:text = "${#temporals.format(q.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text = "${#temporals.format(q.createDate, 'yy-MM-dd HH:mm')}"></td>
     </tr>
     </tbody>
 </table>
