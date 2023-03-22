@@ -4,6 +4,7 @@
 <h2 th:text="${question.subject}"></h2>
 <div th:text="${question.content}"></div>
 
+<h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
 
 <form th:action="@{|/answer/create/${question.id}|}" method="post">
     <div>
@@ -15,5 +16,7 @@
 </form>
 
 <div>
-    [[${answerList]]
+    <ul>
+        <li th:each="answer : ${question.answerList}" th:text="|${answer.id}번 답변: ${answer.content}|"></li>
+    </ul>
 </div>
