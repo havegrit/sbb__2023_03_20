@@ -4,6 +4,7 @@
 <h2 th:text="${question.subject}"></h2>
 <div th:text="${question.content}"></div>
 
+
 <form th:action="@{|/answer/create/${question.id}|}" method="post">
     <div>
         <span>내용</span>
@@ -12,3 +13,7 @@
     </div>
     <button type="submit">답변등록</button>
 </form>
+
+<div>
+    [[${answerList]]
+</div>

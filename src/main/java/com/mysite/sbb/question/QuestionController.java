@@ -1,5 +1,7 @@
 package com.mysite.sbb.question;
 
+import com.mysite.sbb.answer.Answer;
+import com.mysite.sbb.answer.AnswerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionController {
     private final QuestionService questionService;
+    private final AnswerService answerService;
+
     @GetMapping("/list")
     public String list(Model model) {
         List<Question> questionList = questionService.getList();
@@ -24,7 +28,9 @@ public class QuestionController {
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Integer id) {
         Question question = questionService.getQuestion(id);
+        List<Answer> answerList = answerService.getAnswerByQuestionId(id);
         model.addAttribute("question", question);
+        model.addAttribute("answers", answerList);
         return "question_detail";
     }
 }
