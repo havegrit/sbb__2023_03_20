@@ -3,3 +3,12 @@
 </h1>
 <h2 th:text="${question.subject}"></h2>
 <div th:text="${question.content}"></div>
+
+<form th:action="@{|/answer/create/${question.id}|}" method="post">
+    <div>
+        <span>내용</span>
+        <br>
+        <textarea placeholder="내용" name = content rows="15"></textarea>
+    </div>
+    <button type="submit">답변등록</button>
+</form>
