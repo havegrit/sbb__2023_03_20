@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 <h1>
     <span th:text="${question.id}"></span>번 상세 질문
 </h1>
@@ -12,7 +13,7 @@
         <br>
         <textarea placeholder="내용" name ="content" rows="15"></textarea>
     </div>
-    <button type="submit">답변등록</button>
+    <input type="submit" value="답변작성">
 </form>
 
 <div>
