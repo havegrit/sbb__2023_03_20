@@ -1,2 +1,5 @@
-<h1 th:text="${question.subject}"></h1>
+<h1>
+    <span th:text="${question.id}"></span>번 상세 질문
+</h1>
+<h2 th:text="${question.subject}"></h2>
 <div th:text="${question.content}"></div>
