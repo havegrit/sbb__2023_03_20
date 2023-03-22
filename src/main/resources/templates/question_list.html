@@ -1,6 +1,7 @@
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
 <h2>질문 목록</h2>
-<table border="1">
-    <thead>
+<table class="table">
+    <thead class="table-dark">
     <tr>
         <th>번호</th>
         <th>제목</th>
@@ -15,7 +16,7 @@
         <td>
             <a th:href="@{|/question/detail/${q.id}|}" th:text = "${q.subject}"></a>
         </td>
-        <td th:text = "${q.createDate}"></td>
+        <td th:text = "${#temporals.format(q.createDate, 'yyyy-MM-dd HH:mm')}"></td>
     </tr>
     </tbody>
 </table>
