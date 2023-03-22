@@ -11,7 +11,6 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class QuestionController {
-    @Autowired
     private final QuestionRepository questionRepository;
     @GetMapping("/question/list")
     public String list(Model model) {
