@@ -6,7 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/question")
 @Controller
 @RequiredArgsConstructor
-@Validated
+//@Validated 생략해줘야함. 스프링 자체적으로 처리하는 로직이 있기 때문에, 어노테이션 설정을 사용자화 하고 싶은 것이 아니라면 생략하는 것이 좋다.
 public class QuestionController {
     private final QuestionService questionService;
     private final AnswerService answerService;
@@ -44,7 +44,10 @@ public class QuestionController {
     }
 
     @PostMapping("/create")
-    public String questionCreate(@Valid QuestionForm questionFrom) {
+    public String questionCreate(@Valid QuestionForm questionFrom, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "question_form";
+        }
         questionService.create(questionFrom.getSubject(), questionFrom.getContent());
         return "redirect:/question/list";
     }
