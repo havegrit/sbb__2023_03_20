@@ -2,9 +2,11 @@ package com.mysite.sbb.question;
 
 import com.mysite.sbb.answer.Answer;
 import com.mysite.sbb.answer.AnswerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,7 @@ import java.util.List;
 @RequestMapping("/question")
 @Controller
 @RequiredArgsConstructor
+@Validated
 public class QuestionController {
     private final QuestionService questionService;
     private final AnswerService answerService;
@@ -41,23 +44,8 @@ public class QuestionController {
     }
 
     @PostMapping("/create")
-    public String questionCreate(QuestionForm questionFrom) {
-        String subject = questionFrom.getSubject();
-        String content = questionFrom.getContent();
-
-        if (subject == null || subject.trim().length() == 0) {
-            throw new RuntimeException("subject를 입력해주세요.");
-        }
-        if (subject.trim().length() > 200) {
-            throw new RuntimeException("subject를 200자 이하로 입력해주세요.");
-        }
-        if (content == null || content.trim().length() == 0) {
-            throw new RuntimeException("content를 입력해주세요.");
-        }
-        if (content.trim().length() > 20_000) {
-            throw new RuntimeException("content를 20,000자 이하로 입력해주세요.");
-        }
-        questionService.create(subject, content);
+    public String questionCreate(@Valid QuestionForm questionFrom) {
+        questionService.create(questionFrom.getSubject(), questionFrom.getContent());
         return "redirect:/question/list";
     }
 }
