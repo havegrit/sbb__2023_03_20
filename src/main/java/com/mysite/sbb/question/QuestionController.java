@@ -1,6 +1,7 @@
 package com.mysite.sbb.question;
 
 import com.mysite.sbb.answer.Answer;
+import com.mysite.sbb.answer.AnswerForm;
 import com.mysite.sbb.answer.AnswerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class QuestionController {
     }
 
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id) {
+    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
         Question question = questionService.getQuestion(id);
         List<Answer> answerList = answerService.getAnswerByQuestionId(id);
         model.addAttribute("question", question);
