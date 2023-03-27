@@ -26,6 +26,11 @@
     <!-- 페이징처리 시작 -->
     <div th:if="${!paging.isEmpty()}">
         <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" th:href="@{?page=0}">
+                    <span>처음</span>
+                </a>
+            </li>
             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                 <a class="page-link"
                    th:href="@{|?page=${paging.number-1}|}">
@@ -41,6 +46,11 @@
             <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
                 <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
                     <span>다음</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:href="@{|?page=${paging.totalPages-1}|}">
+                    <span>마지막</span>
                 </a>
             </li>
         </ul>
