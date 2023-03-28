@@ -16,10 +16,15 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //http.formLogin().loginPage("/user/login").defaultSuccessUrl("/");
         http
-                /*.authorizeHttpRequests(
+                .authorizeHttpRequests(
                         authorizeHttpRequests -> authorizeHttpRequests
                                 .requestMatchers(new AntPathRequestMatcher("/question/list")).permitAll()
-                )*/
+                                .requestMatchers(new AntPathRequestMatcher("/question/detail/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/user/login")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/style.css")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
+                                .anyRequest().authenticated()
+                )
                 .formLogin(
                         formLogin -> formLogin
                                 .loginPage("/user/login")
