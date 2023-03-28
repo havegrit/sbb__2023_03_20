@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.formLogin().loginPage("/user/login").defaultSuccessUrl("/");
         return http.build();
     }
     @Bean
