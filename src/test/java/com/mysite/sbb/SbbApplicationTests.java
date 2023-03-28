@@ -44,6 +44,8 @@ class SbbApplicationTests {
 		// 흔적삭제(다음번 INSERT 때 id가 1번으로 설정되도록)
 		questionRepository.clearAutoIncrement();
 
+		userRepository.deleteAll();
+
 		userRepository.clearAutoIncrement();
 
 		// 질문 1개 생성

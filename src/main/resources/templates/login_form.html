@@ -1,4 +1,6 @@
 <html layout:decorate="~{layout}">
+<head></head>
+<body>
 <div layout:fragment="content" class="container my-3">
     <form th:action="@{/user/login}" method="post">
         <div th:if="${param.error}">
@@ -17,4 +19,5 @@
         <button type="submit" class="btn btn-primary">로그인</button>
     </form>
 </div>
+</body>
 </html>
