@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class Question {
     // 다만 만들면 해당 객체(질문객체)에서 관련된 답변들을 찾을 때 편합니다.
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     // OneToMany 에는 직접객체초기화
+    @LazyCollection(LazyCollectionOption.EXTRA)
     private List<Answer> answerList = new ArrayList<>();
 
     public void addAnswer(Answer a) {
