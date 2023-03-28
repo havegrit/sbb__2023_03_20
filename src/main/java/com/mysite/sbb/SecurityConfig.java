@@ -23,8 +23,7 @@ public class SecurityConfig {
                 .and()
                 .headers()
                 .addHeaderWriter(new XFrameOptionsHeaderWriter(
-                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
-        ;
+                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
 
         return http.build();
     }
