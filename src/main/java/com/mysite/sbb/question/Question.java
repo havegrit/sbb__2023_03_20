@@ -26,6 +26,8 @@ public class Question {
     @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime createDate;
+    private LocalDateTime modifyDate;
+
     // OneToMany 자바세상에서의 편의를 위해서 필드 생성
     // 이 녀석은 실제 DB 테이블에 칼럼이 생성되지 않는다.
     // DB는 배열이나 리스트를 저장할 수 없다.
@@ -38,6 +40,7 @@ public class Question {
     private List<Answer> answerList = new ArrayList<>();
     @ManyToOne
     private SiteUser author;
+
 
     public void addAnswer(Answer a) {
         a.setQuestion(this);

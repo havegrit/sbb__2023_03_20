@@ -2,6 +2,7 @@ package com.mysite.sbb;
 
 import com.mysite.sbb.answer.Answer;
 import com.mysite.sbb.answer.AnswerRepository;
+import com.mysite.sbb.answer.AnswerService;
 import com.mysite.sbb.question.Question;
 import com.mysite.sbb.question.QuestionRepository;
 import com.mysite.sbb.question.QuestionService;
@@ -34,6 +35,8 @@ class SbbApplicationTests {
 	private UserRepository userRepository;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private AnswerService answerService;
 
 	@BeforeEach // 아래 메서드는 각 테스트케이스가 실행되기 전에 실행된다.
 	void beforeEach() {
@@ -62,11 +65,7 @@ class SbbApplicationTests {
 
 
 		// 답변 1개 생성
-		Answer a1 = new Answer();
-		a1.setContent("네 자동으로 생성됩니다.");
-		q2.addAnswer(a1);
-		a1.setCreateDate(LocalDateTime.now());
-		answerRepository.save(a1);
+		Answer a1 = answerService.create(q2, "네 자동으로 생성됩니다.", user1);
 
 	}
 

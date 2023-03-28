@@ -19,6 +19,7 @@ public class Answer {
     @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime createDate;
+    private LocalDateTime modifyDate;
     @ManyToOne
     @ToString.Exclude
     private Question question;
