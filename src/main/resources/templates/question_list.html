@@ -2,7 +2,20 @@
 <head></head>
 <body>
 <div layout:fragment="content" class="container my-3">
-    <h2>질문 목록</h2>
+    <div class="row my-3">
+        <div class="col-6">
+            <a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
+        </div>
+        <div class="col-6">
+            <form>
+                <div class="input-group">
+                    <input type="text" name="kw" class="form-control" th:value="${param.kw}">
+                    <button class="btn btn-outline-secondary" type="button" >찾기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <table class="table">
         <colgroup>
             <col width="100">
@@ -36,10 +49,10 @@
         </tbody>
     </table>
     <!-- 페이징처리 시작 -->
-    <div th:if="${!paging.isEmpty()}">
+    <div th:if="${!paging.isEmpty()}" th:with="queryStrBase = '?kw=' + ${param.kw != null ? param.kw : ''}">
         <ul class="pagination justify-content-center">
             <li class="page-item">
-                <a class="page-link" th:href="@{?page=0}">
+                <a class="page-link" th:href="@{|${queryStrBase}&page=0|}">
                     <span>처음</span>
                 </a>
             </li>
@@ -53,22 +66,21 @@
                 th:if="${page >= paging.number-5 and page <= paging.number+5}"
                 th:classappend="${page == paging.number} ? 'active'"
                 class="page-item">
-                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                <a th:text="${page}" class="page-link" th:href="@{|${queryStrBase}&page=${page}|}"></a>
             </li>
             <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                <a class="page-link" th:href="@{|${queryStrBase}&page=${paging.number+1}|}">
                     <span>다음</span>
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" th:href="@{|?page=${paging.totalPages-1}|}">
+                <a class="page-link" th:href="@{|${queryStrBase}&page=${paging.totalPages-1}|}">
                     <span>마지막</span>
                 </a>
             </li>
         </ul>
     </div>
     <!-- 페이징처리 끝 -->
-    <a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
 </div>
 </body>
 </html>

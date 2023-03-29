@@ -48,4 +48,8 @@ public class AnswerService {
         answer.addVoter(voter);
         answerRepository.save(answer);
     }
+
+    public void delete(Answer answer) {
+        answerRepository.delete(answer);
+    }
 }
