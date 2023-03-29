@@ -88,6 +88,6 @@ public class QuestionController {
         Question question = questionService.getQuestion(id);
         SiteUser siteUser = userService.getUser(principal.getName());
         questionService.vote(question, siteUser);
-        return "redirect:/question/detail/%s".formatted(id);
+        return "redirect:/question/detail/%d#answer_%d".formatted(id);
     }
 }
