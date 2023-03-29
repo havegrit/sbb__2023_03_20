@@ -62,7 +62,7 @@ public class QuestionController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
     public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id, Principal principal) {
-        Question question = this.questionService.getQuestion(id);
+        Question question = questionService.getQuestion(id);
         if(!question.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
@@ -72,13 +72,33 @@ public class QuestionController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @PostMapping("/modify/{id}")
+    public String questionModify(@Valid QuestionForm questionForm, BindingResult bindingResult,
+                                 Principal principal, @PathVariable("id") Integer id) {
+        if (bindingResult.hasErrors()) {
+            return "question_form";
+        }
+
+        Question question = questionService.getQuestion(id);
+
+        if (!question.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        }
+
+        questionService.modify(question, questionForm.getSubject(), questionForm.getContent());
+
+        return "redirect:/question/detail/%d".formatted(id);
+    }
+
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
     public String questionDelete(Principal principal, @PathVariable("id") Integer id) {
-        Question question = this.questionService.getQuestion(id);
+        Question question = questionService.getQuestion(id);
         if (!question.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
-        this.questionService.delete(question);
+        questionService.delete(question);
         return "redirect:/";
     }
 
@@ -88,6 +108,6 @@ public class QuestionController {
         Question question = questionService.getQuestion(id);
         SiteUser siteUser = userService.getUser(principal.getName());
         questionService.vote(question, siteUser);
-        return "redirect:/question/detail/%d#answer_%d".formatted(id);
+        return "redirect:/question/detail/%d".formatted(id);
     }
 }
