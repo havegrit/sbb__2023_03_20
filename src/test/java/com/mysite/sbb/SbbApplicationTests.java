@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -67,6 +68,21 @@ class SbbApplicationTests {
 		// 답변 1개 생성
 		Answer a1 = answerService.create(q2, "네 자동으로 생성됩니다.", user1);
 
+		// user1 이(가) q1 글을 추천
+		q1.getVoters().add(user1);
+		// user2 이(가) q1 글을 추천
+		q1.getVoters().add(user2);
+		questionRepository.save(q1);
+
+		// user1 이(가) q2 글을 추천
+		q2.getVoters().add(user1);
+		// user2 이(가) q2 글을 추천
+		q2.getVoters().add(user2);
+		questionRepository.save(q2);
+
+		a1.addVoter(user1);
+		a1.addVoter(user2);
+		answerRepository.save(a1);
 	}
 
 	@Test
@@ -233,10 +249,8 @@ class SbbApplicationTests {
 	@Test
 	@DisplayName("테스트 데이터 300개 생성")
 	void t012() {
-		for (int i = 1; i <= 300; i++) {
-			String subject = String.format("테스트 데이터입니다:[%03d]", i);
-			String content = "내용무";
-			questionService.create(subject, content, null);
-		}
+		SiteUser user2 = userService.getUser("user2");
+
+		IntStream.rangeClosed(3, 300).forEach(no -> questionService.create("테스트 제목입니다. %d".formatted(no), "테스트 내용입니다. %d".formatted(no), user2));
 	}
 }
