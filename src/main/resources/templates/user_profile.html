@@ -4,7 +4,7 @@
 <div layout:fragment="content"  class="d-flex">
     <nav th:replace="~{sidebar::sidebarFragment}"></nav>
         <main>
-            <div id="user_information">
+            <div>
                 <h5 th:text="'이름: ' + ${user.username}"></h5>
                 <h5 th:text="'이메일: ' + ${user.email}"></h5>
             </div>

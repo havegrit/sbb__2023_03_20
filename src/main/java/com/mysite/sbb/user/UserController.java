@@ -60,5 +60,4 @@ public class UserController {
         model.addAttribute("answerList", answerList);
         return "user_profile";
     }
-
 }
