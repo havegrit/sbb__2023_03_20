@@ -88,4 +88,9 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
+    public void increaseView(Question question) {
+        Integer views = question.getViews();
+        question.setViews(++views);
+        questionRepository.save(question);
+    }
 }
