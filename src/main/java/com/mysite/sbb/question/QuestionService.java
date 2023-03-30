@@ -67,6 +67,7 @@ public class QuestionService {
         question.setContent(content);
         question.setCreateDate(LocalDateTime.now());
         question.setAuthor(author);
+        question.setViews(0);
         questionRepository.save(question);
         return question;
     }

@@ -22,6 +22,7 @@
             <col>
             <col width="200">
             <col width="200">
+            <col width="70">
         </colgroup>
         <thead class="table-dark">
         <tr>
@@ -29,6 +30,7 @@
             <th>제목</th>
             <th>글쓴이</th>
             <th>작성일시</th>
+            <th>조회수</th>
         </tr>
         </thead>
         <tbody>
@@ -45,6 +47,7 @@
             </td>
             <td th:text="${q.author.username}"></td>
             <td th:text="${#temporals.format(q.createDate, 'yy-MM-dd HH:mm')}"></td>
+            <td class="text-center" th:text="${q.views}"></td>
         </tr>
         </tbody>
     </table>
