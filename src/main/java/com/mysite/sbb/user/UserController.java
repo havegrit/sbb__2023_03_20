@@ -1,12 +1,19 @@
 package com.mysite.sbb.user;
 
+import com.mysite.sbb.answer.Answer;
+import com.mysite.sbb.question.Question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -40,6 +47,18 @@ public class UserController {
     @GetMapping("/login")
     public String login() {
         return "login_form";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/profile")
+    public String profile(Model model, Principal principal) {
+        SiteUser user = userService.getUser(principal.getName());
+        List<Question> questionList = userService.getQuestions(user);
+        List<Answer> answerList = userService.getAnswers(user);
+        model.addAttribute("user", user);
+        model.addAttribute("questionList", questionList);
+        model.addAttribute("answerList", answerList);
+        return "user_profile";
     }
 
 }

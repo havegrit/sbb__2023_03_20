@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -59,10 +58,14 @@ public class AnswerService {
         answerRepository.delete(answer);
     }
 
-    public Page<Answer> getList(int page) {
+    public Page<Answer> getList(Question question, int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
-        return answerRepository.findAll(pageable);
+        return answerRepository.findByQuestionId(question.getId(), pageable);
+    }
+
+    public List<Answer> getAnswersByUser(SiteUser user) {
+        return answerRepository.findByAuthor(user);
     }
 }

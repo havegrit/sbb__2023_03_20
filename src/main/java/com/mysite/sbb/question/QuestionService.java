@@ -53,12 +53,16 @@ public class QuestionService {
     }
 
     public Question getQuestion(Integer id) {
-        Optional<Question> question = this.questionRepository.findById(id);
+        Optional<Question> question = questionRepository.findById(id);
         if (question.isPresent()) {
             return question.get();
         } else {
             throw new DataNotFoundException("question not found");
         }
+    }
+
+    public List<Question> getQuestionsByUser(SiteUser user) {
+        return questionRepository.findByAuthor(user);
     }
 
     public Question create(String subject, String content, SiteUser author) {
