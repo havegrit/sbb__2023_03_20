@@ -33,6 +33,7 @@
                    sec:authorize="isAuthenticated()"
                    th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
                    th:text="삭제"></a>
+                <span th:text="${'조회수 ' + question.views}"></span>
             </div>
         </div>
     </div>
