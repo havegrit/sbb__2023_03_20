@@ -38,11 +38,13 @@ public class QuestionController {
     }
 
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
+    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm, @RequestParam(defaultValue = "0") int page) {
+        Page<Answer> paging = answerService.getList(page);
         Question question = questionService.getQuestion(id);
         List<Answer> answerList = answerService.getAnswerByQuestionId(id);
         model.addAttribute("question", question);
         model.addAttribute("answers", answerList);
+        model.addAttribute("paging", paging);
         return "question_detail";
     }
     @PreAuthorize("isAuthenticated()")

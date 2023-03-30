@@ -58,13 +58,11 @@ class SbbApplicationTests {
 		SiteUser user1 = userService.create("user1", "user1@test.com", "1234");
 		SiteUser user2 = userService.create("user2", "user2@test.com", "1234");
 
-
 		// 질문 1개 생성
 		Question q1 = questionService.create("sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.", user1);
 
 		// 질문 1개 생성
 		Question q2 = questionService.create("스프링부트 모델 질문입니다.", "id는 자동으로 생성되나요?", user2);
-
 
 		// 답변 1개 생성
 		Answer a1 = answerService.create(q2, "네 자동으로 생성됩니다.", user1);
