@@ -43,9 +43,10 @@ public class Question {
     @ManyToOne
     private SiteUser author;
 
+    private Integer views;
+
     @ManyToMany
     private Set<SiteUser> voters = new LinkedHashSet<>();
-
 
     public void addAnswer(Answer a) {
         a.setQuestion(this);
