@@ -13,10 +13,12 @@
     <title>Hello, sbb!</title>
 </head>
 <body>
-<nav th:replace="~{navbar :: navbarFragment}"></nav>
-<!-- 기본 템플릿 안에 삽입될 내용 Start -->
-<th:block layout:fragment="content"></th:block>
-<!-- 기본 템플릿 안에 삽입될 내용 End -->
+<nav th:replace="~{navbar::navbarFragment}"></nav>
+
+<div class="d-flex">
+    <nav th:replace="~{sidebar::sidbarFragment}"></nav>
+    <th:block layout:fragment="content"></th:block>
+</div>
 
 </body>
 </html>

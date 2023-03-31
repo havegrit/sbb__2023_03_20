@@ -30,4 +30,8 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     Page<Question> findAll(Specification<Question> spec, Pageable pageable);
 
     List<Question> findByAuthor(SiteUser user);
+
+    Page<Question> findByCategory(String category, Specification<Question> spec, Pageable pageable);
+
+    Page<Question> findByCategory(String category, Pageable pageable);
 }

@@ -42,8 +42,8 @@ public class Question {
     private List<Answer> answerList = new ArrayList<>();
     @ManyToOne
     private SiteUser author;
-
     private Integer views;
+    private String category;
 
     @ManyToMany
     private Set<SiteUser> voters = new LinkedHashSet<>();

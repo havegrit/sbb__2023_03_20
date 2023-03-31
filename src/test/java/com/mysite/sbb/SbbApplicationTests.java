@@ -59,10 +59,10 @@ class SbbApplicationTests {
 		SiteUser user2 = userService.create("user2", "user2@test.com", "1234");
 
 		// 질문 1개 생성
-		Question q1 = questionService.create("sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.", user1);
+		Question q1 = questionService.create("qna", "sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.", user1);
 
 		// 질문 1개 생성
-		Question q2 = questionService.create("스프링부트 모델 질문입니다.", "id는 자동으로 생성되나요?", user2);
+		Question q2 = questionService.create("qna", "스프링부트 모델 질문입니다.", "id는 자동으로 생성되나요?", user2);
 
 		// 답변 1개 생성
 		Answer a1 = answerService.create(q2, "네 자동으로 생성됩니다.", user1);
@@ -280,17 +280,19 @@ class SbbApplicationTests {
 	@Test
 	@DisplayName("검색, 답변자이름으로 검색할 수 있다.")
 	void t016() {
-		Page<Question> searchResult = questionService.getList(0, "user2");
+		Page<Question> searchResult = questionService.getList("qna",0, "user2");
 
 		assertEquals(2, searchResult.getContent().get(0).getId());
 		assertEquals(1, searchResult.getTotalElements());
 	}
 
 	@Test
-	@DisplayName("테스트 데이터 300개 생성")
+	@DisplayName("테스트 데이터 100개 생성")
 	void t999() {
+		SiteUser user1 = userService.getUser("user1");
 		SiteUser user2 = userService.getUser("user2");
 
-		IntStream.rangeClosed(3, 300).forEach(no -> questionService.create("테스트 제목입니다. %d".formatted(no), "테스트 내용입니다. %d".formatted(no), user2));
+		IntStream.rangeClosed(3, 50).forEach(no -> questionService.create("qna", "qna 테스트 제목입니다. %d".formatted(no), "테스트 내용입니다. %d".formatted(no), user1));
+		IntStream.rangeClosed(1, 50).forEach(no -> questionService.create("free", "free 테스트 제목입니다. %d".formatted(no), "테스트 내용입니다. %d".formatted(no), user2));
 	}
 }

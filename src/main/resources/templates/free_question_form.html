@@ -1,0 +1,21 @@
+<html layout:decorate="~{layout}">
+<head>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <h5 class="my-3 border-bottom pb-2">질문등록</h5>
+    <form th:action method="post"th:object="${questionForm}">
+        <div th:replace="~{form_errors :: formErrorsFragment}" ></div>
+        <div class="mb-3">
+            <label for="subject" class="form-label">제목</label>
+            <input autocomplete="off" required maxlength="200" placeholder="제목(200자 이하)" type="text" class="form-control" th:field="*{subject}">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea autocomplete="off" required maxlength="20000" placeholder="내용(20,000자 이하)" class="form-control" rows="10" th:field="*{content}"></textarea>
+        </div>
+        <input type="submit" value="저장하기" class="btn btn-primary my-2">
+    </form>
+</div>
+</body>
+</html>

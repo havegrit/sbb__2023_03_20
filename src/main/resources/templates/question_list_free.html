@@ -1,0 +1,89 @@
+<html layout:decorate="~{layout}">
+<head></head>
+<body>
+<div layout:fragment="content" class="container my-3">
+    <div class="row my-3">
+        <div class="col-6">
+            <a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
+        </div>
+        <div class="col-6">
+            <form>
+                <div class="input-group">
+                    <input type="text" name="kw" class="form-control" th:value="${param.kw}">
+                    <button class="btn btn-outline-secondary" >찾기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <table class="table">
+        <colgroup>
+            <col width="100">
+            <col>
+            <col width="200">
+            <col width="200">
+            <col width="70">
+        </colgroup>
+        <thead class="table-dark">
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>작성일시</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="q, loop : ${paging}">
+            <td>
+                <a th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"
+                   th:href="@{|/question/detail/${q.id}|}"></a>
+            </td>
+            <td>
+                <a th:text="${q.subject}" th:href="@{|/question/detail/${q.id}|}"></a>
+                <span class="text-danger small ms-2"
+                      th:if="${#lists.size(q.answerList) > 0}"
+                      th:text="${#lists.size(q.answerList)}"></span>
+            </td>
+            <td th:text="${q.author.username}"></td>
+            <td th:text="${#temporals.format(q.createDate, 'yy-MM-dd HH:mm')}"></td>
+            <td class="text-center" th:text="${q.views}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- 페이징처리 시작 -->
+    <div th:if="${!paging.isEmpty()}" th:with="queryStrBase = '?kw=' + ${param.kw != null ? param.kw : ''}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${paging.number} == 0 ? 'disabled'">
+                <a class="page-link" th:href="@{|${queryStrBase}&page=0|}">
+                    <span>처음</span>
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{|${queryStrBase}&page=${paging.number-1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                th:classappend="${page == paging.number} ? 'active'"
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|${queryStrBase}&page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|${queryStrBase}&page=${paging.number+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${paging.number} == ${paging.totalPages-1} ? 'disabled'">
+                <a class="page-link" th:href="@{|${queryStrBase}&page=${paging.totalPages-1}|}">
+                    <span>마지막</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 페이징처리 끝 -->
+</div>
+</body>
+</html>

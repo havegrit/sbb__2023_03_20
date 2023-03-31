@@ -29,10 +29,22 @@ public class QuestionController {
     private final UserService userService;
 
     @GetMapping("/list")
-    public String list(Model model,
+    public String list(){
+        return "redirect:/question/list/qna";
+    }
+    @GetMapping("/list/qna")
+    public String qnaList(Model model,
                        @RequestParam(defaultValue = "0") int page,
                        @RequestParam(defaultValue = "") String kw){
-        Page<Question> paging = questionService.getList(page, kw);
+        Page<Question> paging = questionService.getList("qna", page, kw);
+        model.addAttribute("paging", paging);
+        return "question_list";
+    }
+    @GetMapping("/list/free")
+    public String freeList(Model model,
+                       @RequestParam(defaultValue = "0") int page,
+                       @RequestParam(defaultValue = "") String kw){
+        Page<Question> paging = questionService.getList("free", page, kw);
         model.addAttribute("paging", paging);
         return "question_list";
     }
@@ -51,18 +63,33 @@ public class QuestionController {
         return "question_detail";
     }
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/create")
-    public String questionCreate(QuestionForm questionFrom) {
-        return "question_form";
+    @GetMapping("/create/qna")
+    public String qnaQuestionCreate(QuestionForm questionFrom) {
+        return "qna_question_form";
     }
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/create")
-    public String questionCreate(@Valid QuestionForm questionFrom, BindingResult bindingResult, Principal principal) {
+    @PostMapping("/create/qna")
+    public String qnaQuestionCreate(@Valid QuestionForm questionFrom, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
-            return "question_form";
+            return "qna_question_form";
         }
         SiteUser siteUser = userService.getUser(principal.getName());
-        questionService.create(questionFrom.getSubject(), questionFrom.getContent(), siteUser);
+        questionService.create("qna", questionFrom.getSubject(), questionFrom.getContent(), siteUser);
+        return "redirect:/question/list";
+    }
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/create/free")
+    public String freeQuestionCreate(QuestionForm questionFrom) {
+        return "free_question_form";
+    }
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/create/free")
+    public String freeQuestionCreate(@Valid QuestionForm questionFrom, BindingResult bindingResult, Principal principal) {
+        if (bindingResult.hasErrors()) {
+            return "free_question_form";
+        }
+        SiteUser siteUser = userService.getUser(principal.getName());
+        questionService.create("free", questionFrom.getSubject(), questionFrom.getContent(), siteUser);
         return "redirect:/question/list";
     }
 

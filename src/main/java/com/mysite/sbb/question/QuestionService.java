@@ -41,14 +41,19 @@ public class QuestionService {
     }
 
     public Page<Question> getList(int page, String kw) {
+        return getList(null, page, kw);
+    }
+    public Page<Question> getList(String category, int page, String kw) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         Specification<Question> spec = search(kw);
         if (kw == null || kw.trim().length() == 0) {
-            return questionRepository.findAll(pageable);
+            return questionRepository.findByCategory(category, pageable);
         }
-
+        if(category != null) {
+            return questionRepository.findByCategory(category, spec, pageable);
+        }
         return questionRepository.findAll(spec, pageable);
     }
 
@@ -65,13 +70,14 @@ public class QuestionService {
         return questionRepository.findByAuthor(user);
     }
 
-    public Question create(String subject, String content, SiteUser author) {
+    public Question create(String category, String subject, String content, SiteUser author) {
         Question question = new Question();
         question.setSubject(subject);
         question.setContent(content);
         question.setCreateDate(LocalDateTime.now());
         question.setAuthor(author);
         question.setViews(0);
+        question.setCategory(category);
         questionRepository.save(question);
         return question;
     }
