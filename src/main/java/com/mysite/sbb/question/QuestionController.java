@@ -65,13 +65,13 @@ public class QuestionController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create/qna")
     public String qnaQuestionCreate(QuestionForm questionFrom) {
-        return "qna_question_form";
+        return "question_form";
     }
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create/qna")
     public String qnaQuestionCreate(@Valid QuestionForm questionFrom, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
-            return "qna_question_form";
+            return "question_form";
         }
         SiteUser siteUser = userService.getUser(principal.getName());
         questionService.create("qna", questionFrom.getSubject(), questionFrom.getContent(), siteUser);
@@ -80,13 +80,13 @@ public class QuestionController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create/free")
     public String freeQuestionCreate(QuestionForm questionFrom) {
-        return "free_question_form";
+        return "question_form";
     }
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create/free")
     public String freeQuestionCreate(@Valid QuestionForm questionFrom, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
-            return "free_question_form";
+            return "question_form";
         }
         SiteUser siteUser = userService.getUser(principal.getName());
         questionService.create("free", questionFrom.getSubject(), questionFrom.getContent(), siteUser);
