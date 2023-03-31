@@ -58,9 +58,9 @@ public class AnswerService {
         answerRepository.delete(answer);
     }
 
-    public Page<Answer> getList(Question question, int page) {
+    public Page<Answer> getList(Question question, int page, String sortBy) {
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createDate"));
+        sorts.add(Sort.Order.desc(sortBy));
         Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
         return answerRepository.findByQuestionId(question.getId(), pageable);
     }

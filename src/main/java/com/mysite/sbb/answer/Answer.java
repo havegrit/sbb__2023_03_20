@@ -30,6 +30,7 @@ public class Answer {
     private SiteUser author;
     @ManyToMany
     private Set<SiteUser> voters = new LinkedHashSet<>();
+    private Integer votes = voters.size();
 
     public void addVoter(SiteUser voter){
         voters.add(voter);
