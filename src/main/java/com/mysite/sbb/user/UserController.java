@@ -51,13 +51,30 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
-    public String profile(Model model, Principal principal) {
+    public String profile() {
+        return "redirect:/user/profile/info";
+    }
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/profile/info")
+    public String userInfo(Model model, Principal principal) {
+        SiteUser user = userService.getUser(principal.getName());
+        model.addAttribute("user", user);
+        return "user_information";
+    }
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/profile/question")
+    public String userQuestion(Model model, Principal principal) {
         SiteUser user = userService.getUser(principal.getName());
         List<Question> questionList = userService.getQuestions(user);
-        List<Answer> answerList = userService.getAnswers(user);
-        model.addAttribute("user", user);
         model.addAttribute("questionList", questionList);
+        return "user_question";
+    }
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/profile/answer")
+    public String userAnswer(Model model, Principal principal) {
+        SiteUser user = userService.getUser(principal.getName());
+        List<Answer> answerList = userService.getAnswers(user);
         model.addAttribute("answerList", answerList);
-        return "user_profile";
+        return "user_answer";
     }
 }

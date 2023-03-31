@@ -1,8 +1,8 @@
 <html layout:decorate="~{layout}">
 <head></head>
 <body>
-<div layout:fragment="content"  class="d-flex flex-grow-1 min-vh-100">
-    <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+<div layout:fragment="content"  class="d-flex flex-column flex-grow-1 container">
+    <nav th:replace="~{navTab::navTabFragment}"></nav>
     <main class="mx-3">
         <div class="my-3">
             <h5>사용자 정보</h5>

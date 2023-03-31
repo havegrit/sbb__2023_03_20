@@ -1,0 +1,20 @@
+<html layout:decorate="~{layout}">
+<head></head>
+<body>
+<div layout:fragment="content" class="d-flex flex-column flex-grow-1 container">
+    <nav th:replace="~{navTab::navTabFragment}"></nav>
+    <main class="mx-3">
+        <div class="my-3">
+            <h5>작성한 질문</h5>
+            <div th:each="question : ${questionList}">
+                <ul>
+                    <li>
+                        <a th:text="${question.subject}" th:href="@{|/question/detail/${question.id}|}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>
