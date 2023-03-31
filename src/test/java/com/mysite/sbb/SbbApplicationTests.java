@@ -248,14 +248,14 @@ class SbbApplicationTests {
 	@Test
 	@DisplayName("검색, 질문제목으로 검색할 수 있다.")
 	void t012() {
-		Page<Question> searchResult = questionService.getList(0, "sbb가 무엇인가요");
+		Page<Question> searchResult = questionService.getList("qna", 0, "sbb가 무엇인가요");
 
 		assertEquals(1, searchResult.getTotalElements());
 	}
 	@Test
 	@DisplayName("검색, 질문내용으로 검색할 수 있다.")
 	void t013() {
-		Page<Question> searchResult = questionService.getList(0, "sbb에 대해서 알고 싶습니다.");
+		Page<Question> searchResult = questionService.getList("qna", 0, "sbb에 대해서 알고 싶습니다.");
 
 		assertEquals(1, searchResult.getTotalElements());
 	}
@@ -263,7 +263,7 @@ class SbbApplicationTests {
 	@Test
 	@DisplayName("검색, 질문자이름으로 검색할 수 있다.")
 	void t014() {
-		Page<Question> searchResult = questionService.getList(0, "user1");
+		Page<Question> searchResult = questionService.getList("qna", 0, "user1");
 
 		assertEquals(2, searchResult.getTotalElements());
 	}
@@ -271,7 +271,7 @@ class SbbApplicationTests {
 	@Test
 	@DisplayName("검색, 답변내용으로 검색할 수 있다.")
 	void t015() {
-		Page<Question> searchResult = questionService.getList(0, "네 자동으로 생성됩니다.");
+		Page<Question> searchResult = questionService.getList("qna",0, "네 자동으로 생성됩니다.");
 
 		assertEquals(2, searchResult.getContent().get(0).getId());
 		assertEquals(1, searchResult.getTotalElements());

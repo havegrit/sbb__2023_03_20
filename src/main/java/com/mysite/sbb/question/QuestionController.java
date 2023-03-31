@@ -38,7 +38,7 @@ public class QuestionController {
                        @RequestParam(defaultValue = "") String kw){
         Page<Question> paging = questionService.getList("qna", page, kw);
         model.addAttribute("paging", paging);
-        return "question_list";
+        return "qna_question_list";
     }
     @GetMapping("/list/free")
     public String freeList(Model model,
@@ -46,7 +46,7 @@ public class QuestionController {
                        @RequestParam(defaultValue = "") String kw){
         Page<Question> paging = questionService.getList("free", page, kw);
         model.addAttribute("paging", paging);
-        return "question_list";
+        return "free_question_list";
     }
 
     @GetMapping(value = "/detail/{id}")
@@ -90,7 +90,7 @@ public class QuestionController {
         }
         SiteUser siteUser = userService.getUser(principal.getName());
         questionService.create("free", questionFrom.getSubject(), questionFrom.getContent(), siteUser);
-        return "redirect:/question/list";
+        return "redirect:/question/list/free";
     }
 
     @PreAuthorize("isAuthenticated()")
